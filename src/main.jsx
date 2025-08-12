@@ -8,7 +8,7 @@ import PokemonDetail from "./PokemonDetail.jsx";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <BrowserRouter>
+    <BrowserRouter basename="/pokedex-react">
       <Routes>
         <Route path="/" element={<App />} />
         <Route path="/rophim" element={<Rophim />} />
