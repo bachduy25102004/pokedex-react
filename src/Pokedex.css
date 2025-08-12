@@ -1,0 +1,362 @@
+/* body {
+    background-color: rgb(225, 161, 172);
+} */
+.page-layout {
+  display: grid;
+  grid-template-columns: 1fr minmax(600px, 800px) 1fr; /* left - center - right */
+  min-height: 100vh;
+}
+
+.side-column {
+  background-color: #e0e0e0; /* light grey */
+}
+
+.main-content {
+  background-color: #fff; /* your main content background */
+  padding: 20px;
+}
+
+.title-container {
+  display: flex;
+  justify-content: center; /* horizontal center */
+  align-items: center;
+  margin-bottom: 58px;
+  img {
+    width: 30%;
+  }
+}
+
+.search-bar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* gap: 8px; */
+  margin-bottom: 20px;
+
+  input {
+    padding: 15px;
+    padding-left: 30px;
+    font-size: 1.5rem;
+    border: 2px solid #ccc;
+    border-top-left-radius: 40px;
+    border-bottom-left-radius: 40px;
+    outline: none;
+  }
+
+  button {
+    padding: 15px 16px;
+    font-size: 1.5rem;
+    border: none;
+    border-top-right-radius: 40px;
+    border-bottom-right-radius: 40px;
+    background-color: #377bd4;
+    cursor: pointer;
+    font-weight: bold;
+  }
+  button:hover {
+    background-color: #2a5ea1;
+  }
+}
+
+.search-container {
+  display: flex;
+  justify-content: center; /* center horizontally */
+  /* margin: 20px 0; */
+  /* margin-bottom: 0px  */
+}
+
+.search-bar {
+  position: relative; /* so dropdown is positioned relative to search bar */
+  display: inline-block;
+}
+
+
+
+.search-result-box {
+  position: absolute;
+  top: 100%; /* directly under the search bar */
+  left: 0;
+  width: 100%;
+  background-color: #ebeaea;
+  /* border: 1px solid #ccc; */
+  border-top: none; /* avoid double border with input */
+  max-height: 220px;
+  overflow-y: auto;
+  z-index: 10;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  font-size: 1.5rem;
+  color: rgb(115, 113, 113);
+  /* font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif; */
+}
+
+.search-result-box div {
+  padding: 8px 12px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.search-result-box div:hover {
+  background-color: #e3e0e0;
+}
+
+.pokegrid {
+  display: grid;
+  grid-template-columns: 100px repeat(4, 1fr) 100px; /* fixed width grey columns */
+  gap: 16px;
+}
+
+.side-column {
+  background-color: #ccc;
+}
+
+.pokegrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  /* width: 100%; */
+  /* border: 1px solid    red; */
+  gap: 45px;
+  margin-left: 120px;
+  margin-right: 120px;
+  margin-bottom: 70px;
+  margin-top: 50px;
+}
+
+.pokecard {
+   text-decoration: none;
+   color: black;
+  /* width: 100%; */
+  text-align: center;
+  background-color: white; /*fallback background*/
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease;
+  /* background-color: grey; */
+  /* border: 1px solid black; */
+  img {
+    width: 100%;
+    background-color: lightgray;
+    border-radius: 8px;
+  }
+
+  .type-grass {
+    background-color: #78c850;
+    margin: 8px;
+    padding: 3px;
+    border-radius: 10px;
+    width: 100px;
+  }
+
+  .type-poison {
+    background-color: #a040a0;
+    color: white;
+    margin: 8px;
+    padding: 3px;
+    border-radius: 10px;
+    width: 100px;
+  }
+
+  .type-fire {
+    background-color: rgb(251, 107, 55);
+    color: white;
+    margin: 8px;
+    padding: 3px;
+    border-radius: 10px;
+    width: 100px;
+  }
+
+  .type-flying {
+    background: linear-gradient(
+      to bottom,
+      rgb(62, 155, 248) 50%,
+      /* upper half */ rgb(170, 170, 170) 50%
+    );
+    /* color: white; */
+    margin: 8px;
+    padding: 3px;
+    border-radius: 10px;
+    width: 100px;
+  }
+
+  .type-water {
+    background-color: #6890f0;
+    color: white;
+    margin: 8px;
+    padding: 3px;
+    border-radius: 10px;
+    width: 100px;
+  }
+
+  .type-bug {
+    background-color: rgb(50, 105, 27);
+    color: white;
+    margin: 8px;
+    padding: 3px;
+    border-radius: 10px;
+    width: 100px;
+  }
+
+  .type-normal {
+    background-color: rgb(171, 170, 170);
+    /* color: white; */
+    margin: 8px;
+    padding: 3px;
+    border-radius: 10px;
+    width: 100px;
+  }
+
+  .type-electric {
+    background-color: #f8d030;
+    /* color: white; */
+    margin: 8px;
+    padding: 3px;
+    border-radius: 10px;
+    width: 100px;
+  }
+
+  .type-ground {
+    background: linear-gradient(
+      to bottom,
+      #f8d030 50%,
+      /* upper half */ rgb(129, 109, 39) 50%
+    );
+    /* color: white; */
+    margin: 8px;
+    padding: 3px;
+    border-radius: 10px;
+    width: 100px;
+  }
+
+  .type-fairy {
+    background-color: #faa2e7;
+    /* color: white; */
+    margin: 8px;
+    padding: 3px;
+    border-radius: 10px;
+    width: 100px;
+  }
+
+  .type-fighting {
+    background-color: #a85809;
+    color: white;
+    margin: 8px;
+    padding: 3px;
+    border-radius: 10px;
+    width: 100px;
+  }
+
+  .type-psychic {
+    background-color: #df24dc;
+    color: white;
+    margin: 8px;
+    padding: 3px;
+    border-radius: 10px;
+    width: 100px;
+  }
+
+  .type-rock {
+    background-color: rgb(129, 109, 39);
+    color: white;
+    margin: 8px;
+    padding: 3px;
+    border-radius: 10px;
+    width: 100px;
+  }
+
+  .type-steel {
+    background-color: #93b9b0;
+    /* color: white; */
+    margin: 8px;
+    padding: 3px;
+    border-radius: 10px;
+    width: 100px;
+  }
+
+  .type-ice {
+    background-color: rgb(62, 155, 248);
+    /* color: white; */
+    margin: 8px;
+    padding: 3px;
+    border-radius: 10px;
+    width: 100px;
+  }
+
+  .type-ghost {
+    background-color: #51025a;
+    color: white;
+    margin: 8px;
+    padding: 3px;
+    border-radius: 10px;
+    width: 100px;
+  }
+
+  .type-dragon {
+    background: linear-gradient(
+      to bottom,
+      rgb(83, 164, 207) 50%,
+      orangered 50%
+    );
+    color: white;
+    margin: 8px;
+    padding: 3px;
+    border-radius: 10px;
+    width: 100px;
+  }
+
+  .type-dark {
+    background-color: #3e3e3e;
+    color: white;
+    margin: 8px;
+    padding: 3px;
+    border-radius: 10px;
+    width: 100px;
+  }
+}
+
+.pokecard:hover {
+  transition: 0.2s transform ease;
+  transform: translateY(-5px);
+  cursor: pointer;
+}
+
+.pokeName {
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+  font-size: 2rem;
+  margin: 4px;
+}
+
+.pokeID {
+  margin: 4px;
+  /* margin-right: auto; */
+}
+
+.types {
+  display: flex;
+  /* text-align: center; */
+  justify-content: center;
+}
+
+.type {
+  /* display: inline-block; */
+  padding: 4px 8px;
+  border-radius: 25%;
+  /* color: white; */
+  font-size: 0.75rem;
+  margin: 4px;
+  /* text-transform: capitalize; */
+}
+
+.showmore-button {
+  display: block;
+  margin: 70px auto;
+  padding: 1.2rem 1.5rem;
+  font-size: 1.5rem;
+  background-color: #377bd4;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.showmore-button:hover {
+  background-color: #2a5ea1;
+}
