@@ -4,6 +4,8 @@ import "./Pokedex.css";
 import titleImg from "./assets/title.png";
 import { toTitleCase } from "./Components/PokeCard";
 import useWindowDimension from "./hooks/useWindowDimension";
+import { Link } from "react-router";
+import { useLocation } from "react-router";
 export default function Pokedex() {
   const [pokemons, setPokemons] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -17,6 +19,7 @@ export default function Pokedex() {
   const inputSearchRef = useRef(null);
   const timeoutRef = useRef(null);
   const [width, height] = useWindowDimension();
+  const location = useLocation();
     console.log('dimensions:', width, height);
 
   const fakePokemonData = [
@@ -224,9 +227,11 @@ export default function Pokedex() {
           {searchResults.length > 0 && (
             <div className="search-result-box">
               {searchResults.map((pkm) => (
-                <div key={pkm.id}>
-                  {toTitleCase(pkm.name)}
-                </div>
+                <Link to={`${location.pathname}/${pkm.id}`} key={pkm.id} className="linku">
+                  <div key={pkm.id}>
+                    {toTitleCase(pkm.name)}
+                  </div>  
+                </Link>
               ))}
             </div>
           )}

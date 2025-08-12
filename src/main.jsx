@@ -3,7 +3,7 @@ import { createRoot } from "react-dom/client";
 import Rophim from "./Rophim.jsx";
 import App from "./App.jsx";
 import Pokedex from "./Pokedex.jsx";
-import { Route, Routes, BrowserRouter } from "react-router";
+import { Route, Routes, BrowserRouter, HashRouter } from "react-router";
 import PokemonDetail from "./PokemonDetail.jsx";
 
 createRoot(document.getElementById("root")).render(

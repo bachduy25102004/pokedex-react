@@ -90,10 +90,17 @@
   /* font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif; */
 }
 
+.linku {
+  text-decoration: none;
+  color: rgb(83, 83, 83);
+}
+
 .search-result-box div {
+  text-decoration: none;
   padding: 8px 12px;
   cursor: pointer;
   transition: background 0.2s;
+  
 }
 
 .search-result-box div:hover {
