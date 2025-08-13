@@ -183,7 +183,7 @@ export default function Pokedex() {
       if (inputSearchRef.current) {
         console.log(inputSearchRef.current.value);
         
-        const searchValue = inputSearchRef.current.value;
+        const searchValue = inputSearchRef.current.value.toLowerCase();
         if (!searchValue) {
           setSearchResults([]);
           return;
