@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "homepage": "https://bachduy25102004.github.io/pokedex-react/",
+  "homepage": "https://bachduy25102004.github.io/pokedex-react",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
