@@ -6,6 +6,8 @@ import { toTitleCase } from "./Components/PokeCard";
 import useWindowDimension from "./hooks/useWindowDimension";
 import { Link } from "react-router";
 import { useLocation } from "react-router";
+import MyButton from "./Components/MyButton";
+
 export default function Pokedex() {
   const [pokemons, setPokemons] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -15,12 +17,13 @@ export default function Pokedex() {
   const offset = page * limit;
   const isFirstRender = useRef(true);
   const [selectedPokemon, setSelectedPokemon] = useState([]);
+
   const [searchResults, setSearchResults] = useState([]);
   const inputSearchRef = useRef(null);
   const timeoutRef = useRef(null);
   const [width, height] = useWindowDimension();
   const location = useLocation();
-    console.log('dimensions:', width, height);
+  console.log("dimensions:", width, height);
 
   const fakePokemonData = [
     {
@@ -61,9 +64,19 @@ export default function Pokedex() {
     },
   ];
 
+  const onClickHandler = (pkm, selected) => {
+    if (selected) {
+      setSelectedPokemon([...selectedPokemon, pkm]);
+    } else {
+      setSelectedPokemon((prev) =>
+        prev.filter((pokemon) => pokemon.id !== pkm.id)
+      );
+    }
+  };
+
   useEffect(() => {
     console.log("useeffect with no deps");
-    
+
     setIsLoading(true);
 
     fetch(`https://pokeapi.co/api/v2/pokemon?limit=${limit}&offset=${offset}`)
@@ -147,16 +160,6 @@ export default function Pokedex() {
       });
   };
 
-  const onClickHandler = (pkm, selected) => {
-    if (selected) {
-      setSelectedPokemon([...selectedPokemon, pkm]);
-    } else {
-      setSelectedPokemon((prev) =>
-        prev.filter((pokemon) => pokemon.id !== pkm.id)
-      );
-    }
-  };
-
   useEffect(() => {
     console.log("page", page);
     if (isFirstRender.current) {
@@ -182,7 +185,7 @@ export default function Pokedex() {
     timeoutRef.current = setTimeout(async () => {
       if (inputSearchRef.current) {
         console.log(inputSearchRef.current.value);
-        
+
         const searchValue = inputSearchRef.current.value.toLowerCase();
         if (!searchValue) {
           setSearchResults([]);
@@ -201,7 +204,7 @@ export default function Pokedex() {
   return (
     <>
       <div>
-        <h1>My Pokemons</h1>
+        {/* <h1>My Pokemons</h1> */}
         <div>
           {selectedPokemon.map((pkm) => (
             <div key={pkm.id}>{pkm.name}</div>
@@ -223,14 +226,16 @@ export default function Pokedex() {
             onChange={searchHandler}
           />
           <button>🔎</button>
-          
+
           {searchResults.length > 0 && (
             <div className="search-result-box">
               {searchResults.map((pkm) => (
-                <Link to={`${location.pathname}/${pkm.id}`} key={pkm.id} className="linku">
-                  <div key={pkm.id}>
-                    {toTitleCase(pkm.name)}
-                  </div>  
+                <Link
+                  to={`${location.pathname}/${pkm.id}`}
+                  key={pkm.id}
+                  className="linku"
+                >
+                  <div key={pkm.id}>{toTitleCase(pkm.name)}</div>
                 </Link>
               ))}
             </div>
@@ -241,7 +246,13 @@ export default function Pokedex() {
       {isLoading ? (
         <p>is Loading...</p>
       ) : (
-        <div className="pokegrid" style={{gridTemplateColumns: width <= 425 ? 'repeat(2, 1fr)' : 'repeat(4, 1fr)'}}>
+        <div
+          className="pokegrid"
+          style={{
+            gridTemplateColumns:
+              width <= 425 ? "repeat(2, 1fr)" : "repeat(4, 1fr)",
+          }}
+        >
           {/* <div className="side-column"></div> */}
           {pokemons.map((pkm) => (
             <PokeCard pokemon={pkm} key={pkm.name} onClicked={onClickHandler} />
@@ -250,9 +261,9 @@ export default function Pokedex() {
         </div>
       )}
 
-      <button className="showmore-button" onClick={() => setPage(page + 1)}>
+      <MyButton className="showmore-button" onClick={() => setPage(page + 1)}>
         Show more Pokemon
-      </button>
+      </MyButton>
     </>
   );
 }

@@ -6,6 +6,7 @@
   display: flex;
   justify-content: center; /* horizontal center */
   align-items: center;
+  margin-top: 58px;
   margin-bottom: 58px;
   img {
     width: 30%;
@@ -105,10 +106,10 @@
   /* width: 100%; */
   /* border: 1px solid    red; */
   gap: 45px;
-  /* margin-left: 120px;
+  margin-left: 120px;
   margin-right: 120px;
   margin-bottom: 70px;
-  margin-top: 50px; */
+  margin-top: 50px; 
 }
 
 .pokecard {

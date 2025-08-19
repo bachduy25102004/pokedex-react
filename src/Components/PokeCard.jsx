@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import "../Pokedex.css";
 import { Link, useLocation } from "react-router";
+import Pokedex from "../Pokedex";
 
 export function toTitleCase(name) {
   const firstChar = name[0];
@@ -11,14 +12,16 @@ export default function PokeCard(props) {
   const { pokemon, onClicked } = props;
   const [selected, setSelected] = useState(false);
   const location = useLocation();
+  console.log(location.pathname);
+  
 
   const onPokemonSelect = () => {
     setSelected(!selected);
   }
 
-  useEffect(() => {
-    onClicked(pokemon, selected)
-  }, [selected]);
+  // useEffect(() => {
+  //   onClicked(pokemon, selected)
+  // }, [selected]);
 
   const formatID = (num) => {
     let newID = num.toString();
@@ -34,7 +37,7 @@ export default function PokeCard(props) {
     
     // <div className="pokecard" onClick={onPokemonSelect}>
     <Link 
-            to={`${location.pathname}/${pokemon.id}`} 
+            to={`/pokedex/${pokemon.id}`} 
             className="pokecard" 
         >
       {/* <div className={`image-wrapper type-${pokemon.types[0]}`}> */}

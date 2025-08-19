@@ -1,11 +1,15 @@
-import { useCallback, useEffect, useState } from "react";
+import { use, useCallback, useEffect, useRef, useState } from "react";
 import { Link, useParams } from "react-router";
 import { toTitleCase } from "./Components/PokeCard";
+import { AppContext } from "./appContext";
 
 export default function PokemonDetail() {
   const { name } = useParams();
   const [pokemon, setPokemon] = useState(null);
-//   console.log(name);
+  const { favorites, setFavorites } = use(AppContext);
+  const [isFav, setIsFav] = useState(false);
+
+  //   console.log(name);
 
   const fetchData = useCallback(async () => {
     try {
@@ -15,9 +19,7 @@ export default function PokemonDetail() {
         id: pokemonData.id,
         name: pokemonData.name,
         sprite:
-          pokemonData["sprites"]["other"]["official-artwork"][
-            "front_default"
-          ],
+          pokemonData["sprites"]["other"]["official-artwork"]["front_default"],
         types: pokemonData.types.map((t) => t.type.name),
         stats: [
           pokemonData.stats.map((stat) => stat.base_stat),
@@ -34,21 +36,55 @@ export default function PokemonDetail() {
     fetchData();
   }, [fetchData]);
 
-  if (!pokemon) {
-        return (
-            <div>
-                Loading...
-            </div>
-        )
-    }
+  useEffect(() => {
+    if (!pokemon) return;
 
-    return (
-        <>
-            <Link to='/pokedex'>Back to Home</Link>
-            <h1>{toTitleCase(pokemon.name)}</h1>
-            <img src={pokemon.sprite} alt="" />
-            <p>#{pokemon.id}</p>
-            <p></p>
-        </>
-    )
+    if (favorites.find((pkm) => pkm.id === pokemon.id)) {
+      setIsFav(true);
+    } else {
+      setIsFav(false);
+    }
+  }, [fetchData, pokemon]);
+
+  const AddToFavorite = () => {
+    if (!favorites.find((pkm) => pkm.id === pokemon.id)) {
+      console.log(`adding ${pokemon.name}`);
+
+      setFavorites([...favorites, pokemon]);
+      setIsFav(true);
+    } else {
+      console.log(`${pokemon.name} is already in favorites!`);
+    }
+  };
+
+  const removeFromFavorite = () => {
+    console.log(`deleting  ${pokemon.name}`);
+
+    let newFavs = structuredClone(favorites);
+
+    newFavs = newFavs.filter((pkm) => pkm.id !== pokemon.id);
+
+    console.log("newfavs:", newFavs);
+
+    setFavorites(newFavs);
+    setIsFav(false);
+  };
+
+  if (!pokemon) {
+    return <div>Loading...</div>;
+  }
+
+  return (
+    <>
+      <Link to="/pokedex">Back to Home</Link>
+      <h1>{toTitleCase(pokemon.name)}</h1>
+      <img src={pokemon.sprite} alt="" />
+      <p>#{pokemon.id}</p>
+      {isFav ? (
+        <button onClick={removeFromFavorite}>❤️</button>
+      ) : (
+        <button onClick={AddToFavorite}>🖤</button>
+      )}
+    </>
+  );
 }
