@@ -46,7 +46,7 @@ export default function PokemonDetail() {
     }
   }, [fetchData, pokemon]);
 
-  const AddToFavorite = () => {
+  function AddToFavorite() {
     if (!favorites.find((pkm) => pkm.id === pokemon.id)) {
       console.log(`adding ${pokemon.name}`);
 
@@ -57,7 +57,7 @@ export default function PokemonDetail() {
     }
   };
 
-  const removeFromFavorite = () => {
+  function RemoveFromFavorite() {
     console.log(`deleting  ${pokemon.name}`);
 
     let newFavs = structuredClone(favorites);
@@ -81,7 +81,7 @@ export default function PokemonDetail() {
       <img src={pokemon.sprite} alt="" />
       <p>#{pokemon.id}</p>
       {isFav ? (
-        <button onClick={removeFromFavorite}>❤️</button>
+        <button onClick={RemoveFromFavorite}>❤️</button>
       ) : (
         <button onClick={AddToFavorite}>🖤</button>
       )}

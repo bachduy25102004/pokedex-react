@@ -1,23 +1,25 @@
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 import "../Pokedex.css";
 import { Link, useLocation } from "react-router";
 import Pokedex from "../Pokedex";
+import { AppContext } from "../appContext";
 
 export function toTitleCase(name) {
   const firstChar = name[0];
   return firstChar.toUpperCase() + name.slice(1);
-};
+}
 
 export default function PokeCard(props) {
   const { pokemon, onClicked } = props;
   const [selected, setSelected] = useState(false);
   const location = useLocation();
-  console.log(location.pathname);
-  
+  const { favorites, setFavorites } = use(AppContext);
+  const [isFav, setIsFav] = useState(false);
+  // console.log(location.pathname);
 
   const onPokemonSelect = () => {
     setSelected(!selected);
-  }
+  };
 
   // useEffect(() => {
   //   onClicked(pokemon, selected)
@@ -33,25 +35,70 @@ export default function PokeCard(props) {
     return "#" + newID;
   };
 
-  return (
+  useEffect(() => {
+    if (!pokemon) return;
+
+    if (favorites.find((pkm) => pkm.id === pokemon.id)) {
+      setIsFav(true);
+    } else {
+      setIsFav(false);
+    }
+  }, [pokemon]);
+
+  function AddToFavorite(evt) {
+    console.log(evt);
     
+    evt.stopPropagation();
+    evt.preventDefault();
+    if (!favorites.find((pkm) => pkm.id === pokemon.id)) {
+      console.log(`adding ${pokemon.name}`);
+
+      setFavorites([...favorites, pokemon]);
+      setIsFav(true);
+    } else {
+      console.log(`${pokemon.name} is already in favorites!`);
+    }
+  }
+
+  function removeFromFavorite(evt) {
+    console.log('evt:', evt);
+    // return;
+    
+
+
+    evt.stopPropagation();
+    evt.preventDefault();
+    console.log(`deleting  ${pokemon.name}`); 
+    let newFavs = structuredClone(favorites);
+
+    newFavs = newFavs.filter((pkm) => pkm.id !== pokemon.id);
+
+    console.log("newfavs:", newFavs);
+
+    setFavorites(newFavs);
+    setIsFav(false);
+  }
+
+  return (
     // <div className="pokecard" onClick={onPokemonSelect}>
-    <Link 
-            to={`/pokedex/${pokemon.id}`} 
-            className="pokecard" 
-        >
+    <Link to={`/pokedex/${pokemon.id}`} className="pokecard">
       {/* <div className={`image-wrapper type-${pokemon.types[0]}`}> */}
       <img src={pokemon.sprite} alt="" />
       {/* </div> */}
+      {isFav ? (
+        <button onClick={removeFromFavorite}>❤️</button>
+      ) : (
+        <button onClick={AddToFavorite}>🖤</button>
+      )}
       <p className="pokeID">{formatID(pokemon.id)}</p>
       <p className="pokeName">{toTitleCase(pokemon.name)}</p>
-        <div className="types">
-          {pokemon.types.map((type) => (
-            <div key={type} className={`type-${type}`}>
-              {toTitleCase(type)}
-           </div>
-          ))}
-        </div>
+      <div className="types">
+        {pokemon.types.map((type) => (
+          <div key={type} className={`type-${type}`}>
+            {toTitleCase(type)}
+          </div>
+        ))}
+      </div>
       {/* </div> */}
     </Link>
   );

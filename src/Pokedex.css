@@ -113,6 +113,7 @@
 }
 
 .pokecard {
+  position: relative;
    text-decoration: none;
    color: black;
   /* width: 100%; */
@@ -122,6 +123,9 @@
   transition: background-color 0.3s ease;
   /* background-color: grey; */
   /* border: 1px solid black; */
+  button {
+    display: none;
+  }
   img {
     width: 100%;
     background-color: lightgray;
@@ -306,6 +310,16 @@
   transition: 0.2s transform ease;
   transform: translateY(-5px);
   cursor: pointer;
+  button {
+    position:absolute;
+    right: 12px;
+    top: 10px;
+    display: inline-block;
+    /* width: 70px; */
+    font-size: 2rem;
+    border: none;
+    background-color: transparent;
+  }
 }
 
 .pokeName {
