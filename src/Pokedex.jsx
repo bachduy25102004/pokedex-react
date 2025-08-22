@@ -7,8 +7,12 @@ import useWindowDimension from "./hooks/useWindowDimension";
 import { Link } from "react-router";
 import { useLocation } from "react-router";
 import MyButton from "./Components/MyButton";
+import { use } from "react";
+import { AppContext } from "./appContext";
+import Modal from "./Modal";
 
 export default function Pokedex() {
+  const { favorites, setFavorites, deletingPokemon, setDeletingPokemon} = use(AppContext)
   const [pokemons, setPokemons] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   // const fetchAPI = "https://pokeapi.co/api/v2/pokemon?limit=20&offset=0"
@@ -25,6 +29,7 @@ export default function Pokedex() {
   const location = useLocation();
   console.log("dimensions:", width, height);
 
+  document.title = "Pokedex";
   const fakePokemonData = [
     {
       name: "bulbasaur",
@@ -201,6 +206,20 @@ export default function Pokedex() {
     }, 500);
   };
 
+  function removeFromFavorite() {
+    // console.log(`deleting  ${pokemon.name}`);
+
+    let newFavs = structuredClone(favorites);
+
+    newFavs = newFavs.filter((pkm) => pkm.id !== deletingPokemon.id);
+
+    console.log("newfavs:", newFavs);
+
+    setFavorites(newFavs);
+    setDeletingPokemon(null);
+    // setIsFav(false);
+  }
+
   return (
     <>
       <div>
@@ -264,6 +283,22 @@ export default function Pokedex() {
       <MyButton className="showmore-button" onClick={() => setPage(page + 1)}>
         Show more Pokemon
       </MyButton>
+      {!!deletingPokemon && (
+        <Modal>
+          <h1>Deleting {toTitleCase(deletingPokemon.name)} </h1>
+          <div className="abc">
+            <button className="btn-delete" onClick={removeFromFavorite}>
+              Delete
+            </button>
+            <button
+              className="btn-cancel"
+              onClick={() => setDeletingPokemon(null)}
+            >
+              Cancel
+            </button>
+          </div>
+        </Modal>
+      )}
     </>
   );
 }

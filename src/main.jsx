@@ -8,6 +8,7 @@ import PokemonDetail from "./PokemonDetail.jsx";
 import Navbar from "./NavBar.jsx";
 import { ContextProvider } from "./appContext.jsx";
 import PokemonFav from "./PokemonFav.jsx";
+import './index.css';
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>

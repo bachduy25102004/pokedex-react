@@ -13,11 +13,17 @@ export function ContextProvider({ children }) {
     },
   ]);
 
-  console.log('favs', favorites);
+  // console.log('favs', favorites);
+  const [deletingPokemon, setDeletingPokemon] = useState(null);
+  const [popNotification, setPopNotification] = useState(false);
   
   const ctx = {
     favorites,
     setFavorites,
+    deletingPokemon,
+    setDeletingPokemon,
+    popNotification,
+    setPopNotification
   };
 
   return <AppContext value={ctx}>{children}</AppContext>;

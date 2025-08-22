@@ -1,6 +1,6 @@
-/* body {
-    background-color: rgb(225, 161, 172);
-} */
+body {
+  background-color: #f4f4f4;
+}
 
 .title-container {
   display: flex;
@@ -57,8 +57,6 @@
   display: inline-block;
 }
 
-
-
 .search-result-box {
   position: absolute;
   top: 100%; /* directly under the search bar */
@@ -87,13 +85,11 @@
   padding: 8px 12px;
   cursor: pointer;
   transition: background 0.2s;
-  
 }
 
 .search-result-box div:hover {
   background-color: #e3e0e0;
 }
-
 
 .side-column {
   background-color: #ccc;
@@ -102,23 +98,24 @@
 .pokegrid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  
+
   /* width: 100%; */
   /* border: 1px solid    red; */
   gap: 45px;
   margin-left: 120px;
   margin-right: 120px;
   margin-bottom: 70px;
-  margin-top: 50px; 
+  margin-top: 50px;
 }
 
 .pokecard {
+  border-radius: 8px;
   position: relative;
-   text-decoration: none;
-   color: black;
+  text-decoration: none;
+  color: black;
   /* width: 100%; */
   text-align: center;
-  background-color: white; /*fallback background*/
+  background-color: #f4f4f4; /*fallback background*/
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   transition: background-color 0.3s ease;
   /* background-color: grey; */
@@ -311,7 +308,7 @@
   transform: translateY(-5px);
   cursor: pointer;
   button {
-    position:absolute;
+    position: absolute;
     right: 12px;
     top: 10px;
     display: inline-block;
@@ -319,13 +316,15 @@
     font-size: 2rem;
     border: none;
     background-color: transparent;
+    cursor: pointer;
   }
 }
 
 .pokeName {
   font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
-  font-size: 2rem;
-  margin: 4px;
+  font-size: 2.2rem;
+  /* padding: 8px; */
+  margin: 6px;
 }
 
 .pokeID {
@@ -337,6 +336,7 @@
   display: flex;
   /* text-align: center; */
   justify-content: center;
+  margin-bottom: 10px;
 }
 
 .type {
@@ -363,4 +363,115 @@
 
 .showmore-button:hover {
   background-color: #2a5ea1;
+}
+
+.modal-overlay {
+  margin: 0;
+  padding: 0;
+  top: 0;
+  position: fixed;
+
+  width: 100vw;
+  height: 100vh;
+  background: rgba(30, 4, 4, 0.38);
+
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .modal-content {
+    text-align: center;
+    font-size: 1.4rem;
+    width: 300px;
+    height: 250px;
+    background-color: rgb(238, 237, 237);
+    padding: 32px;
+    padding-top: 10px;
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.9);
+    position: relative;
+  }
+}
+
+.abc {
+  right: 50px;
+  bottom: 50px;
+  display: flex;
+  justify-content: space-evenly;
+  gap: 1.5rem;
+  position: absolute;
+  button {
+    /* background: transparent; */
+    height: 50px;
+    padding: 0.6rem 1.2rem;
+    border-radius: 9px;
+    /* font-weight: bold; */
+    font-size: 1.7rem;
+    cursor: pointer;
+    border: none;
+    transition: background 0.2s ease, transform 0.1s ease;
+  }
+}
+
+.btn-delete {
+  background: #e74c3c;
+  color: white;
+}
+
+.btn-delete:hover {
+  background: #c0392b;
+}
+
+.btn-cancel {
+  background: #bdc3c7;
+  color: #2c3e50;
+}
+
+.btn-cancel:hover {
+  background: #95a5a6;
+}
+@keyframes dropDown {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+}
+@keyframes dropUp {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.notification-container {
+  width: 200px;
+  position: fixed;
+  left: 8px;
+  bottom: 8px;
+  background: #676767;
+  padding: 20px;
+  color: white;
+  border-radius: 6px;
+  justify-content: space-between;
+  display: flex;
+  animation: dropUp 0.3s ease forwards;
+
+  button {
+    background: transparent;
+    color: white;
+  }
+}
+
+.notification-container.hide {
+  animation: dropDown 0.3s ease forwards;
 }
