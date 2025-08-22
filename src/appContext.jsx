@@ -16,6 +16,8 @@ export function ContextProvider({ children }) {
   // console.log('favs', favorites);
   const [deletingPokemon, setDeletingPokemon] = useState(null);
   const [popNotification, setPopNotification] = useState(false);
+
+  console.log('pop:', popNotification)
   
   const ctx = {
     favorites,

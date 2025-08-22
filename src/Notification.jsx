@@ -3,13 +3,16 @@ import { AppContext } from "./appContext";
 
 export default function Notification(props) {
   const ctx = use(AppContext);
+
   useEffect(() => {
     const timer = setTimeout(() => {
       ctx.setPopNotification(false);
-    }, 3000);
+    }, 1000);
 
     return () => clearTimeout(timer);
   }, []);
+
+  console.log('pop:', ctx.popNotification)
 
   return (
     <div

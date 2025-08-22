@@ -433,6 +433,7 @@ body {
 .btn-cancel:hover {
   background: #95a5a6;
 }
+
 @keyframes dropDown {
   from {
     opacity: 1;
@@ -443,6 +444,7 @@ body {
     transform: translateY(-20px);
   }
 }
+
 @keyframes dropUp {
   from {
     opacity: 0;
@@ -453,6 +455,7 @@ body {
     transform: translateY(0);
   }
 }
+
 .notification-container {
   width: 200px;
   position: fixed;
@@ -464,7 +467,7 @@ body {
   border-radius: 6px;
   justify-content: space-between;
   display: flex;
-  animation: dropUp 0.3s ease forwards;
+
 
   button {
     background: transparent;
@@ -472,6 +475,10 @@ body {
   }
 }
 
-.notification-container.hide {
+.show {
+  animation: dropUp 0.3s ease forwards;
+}
+
+.hide {
   animation: dropDown 0.3s ease forwards;
 }
