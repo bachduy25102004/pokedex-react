@@ -21,10 +21,12 @@ const routes = [
 export default function Navbar() {
   const ctx = use(AppContext);
   return (
-    <nav style={{display: 'flex', justifyContent: 'space-evenly', alignItems: 'center', borderColor: 'black', borderWidth: '3px', borderStyle: 'solid'}}>
-      {routes.map((route) => {
+    // <nav style={{display: 'flex', justifyContent: 'space-evenly', alignItems: 'center', borderColor: 'black', borderWidth: '3px', borderStyle: 'solid', position: 'fixed', top: '0', width: '100vw', background: '#bdc3c7'}}>
+    <nav className="flex justify-evenly items-center border-black border-3 border-solid fixed top-0 w-screen h-24 bg-gray-400 z-10">  
+    {routes.map((route) => {
         return (
           <Link to={route.path} key={route.name} style={{textDecoration: 'none', display: 'flex', padding: '20px'}}>
+            
             <div>{route.name}</div>
           </Link>
         );

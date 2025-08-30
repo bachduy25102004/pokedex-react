@@ -34,12 +34,12 @@ export default function PokemonFav() {
       {!!deletingPokemon && (
         <Modal>
           <h1>Deleting {toTitleCase(deletingPokemon.name)} </h1>
-          <div className="abc">
-            <button className="btn-delete" onClick={removeFromFavorite}>
+          <div className="flex mb-[64px] justify-center gap-8 mt-12">
+            <button className="bg-red-500 px-6 py-1 rounded-lg text-[1.7rem] hover:bg-red-700" onClick={removeFromFavorite}>
               Delete
             </button>
             <button
-              className="btn-cancel"
+              className="bg-gray-500 px-6 py-1 rounded-lg text-[1.7rem] hover:bg-gray-400 "
               onClick={() => setDeletingPokemon(null)}
             >
               Cancel

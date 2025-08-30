@@ -6,7 +6,7 @@ body {
   display: flex;
   justify-content: center; /* horizontal center */
   align-items: center;
-  margin-top: 58px;
+  /* margin-top: 124px; */
   margin-bottom: 58px;
   img {
     width: 30%;
@@ -384,25 +384,33 @@ body {
 
   .modal-content {
     text-align: center;
-    font-size: 1.4rem;
-    width: 300px;
-    height: 250px;
+    font-size: 2.7rem;
+    width: 370px;
+    height: 300px;
     background-color: rgb(238, 237, 237);
     padding: 32px;
     padding-top: 10px;
     border-radius: 16px;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.9);
     position: relative;
+    display: flex;
+    flex-direction: column;
   }
 }
 
 .abc {
-  right: 50px;
-  bottom: 50px;
+  /* right: 50px;
+  bottom: 50px; */
   display: flex;
-  justify-content: space-evenly;
-  gap: 1.5rem;
-  position: absolute;
+  /* justify-content: space-evenly; */
+  /* gap: 1.5rem; */
+  /* position: absolute; */
+  /* border: 1px solid red;
+  margin-top: 64px;
+  gap: 16px;
+  justify-content: center;
+   */
+
   button {
     /* background: transparent; */
     height: 50px;

@@ -4,7 +4,7 @@ import { toTitleCase } from "./Components/PokeCard";
 import { AppContext } from "./appContext";
 import Modal from "./Modal";
 import Notification from "./Notification";
-
+import ReturnArrow from "./Components/ReturnArrow";
 export default function PokemonDetail() {
   const { name } = useParams();
   const [pokemon, setPokemon] = useState(null);
@@ -105,7 +105,9 @@ export default function PokemonDetail() {
 
   return (
     <>
-      <Link to="/pokedex">Back to Home</Link>
+      <Link to="/pokedex">
+      <ReturnArrow />
+      </Link>
       <h1>{toTitleCase(pokemon.name)}</h1>
       <img src={pokemon.sprite} alt="" />
       <p>#{pokemon.id}</p>

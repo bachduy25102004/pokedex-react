@@ -1,5 +1,6 @@
 import { use, useEffect } from "react";
 import { AppContext } from "./appContext";
+import './Pokedex.css';
 
 export default function Notification(props) {
   const ctx = use(AppContext);
@@ -12,7 +13,7 @@ export default function Notification(props) {
     return () => clearTimeout(timer);
   }, []);
 
-  console.log('pop:', ctx.popNotification)
+  
 
   return (
     <div

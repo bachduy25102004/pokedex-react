@@ -67,8 +67,11 @@ button:focus-visible {
   }
 } */
 
+@import "tailwindcss";
+
 html, body {
   padding: 0;
   margin: 0;
-  
+  padding-top: 70px;  
 }
+
