@@ -11,7 +11,7 @@ import PokemonFav from "./PokemonFav.jsx";
 import './index.css';
 
 createRoot(document.getElementById("root")).render(
-  <StrictMode>
+  // <StrictMode>
     <ContextProvider>
       <HashRouter>
         <Navbar />
@@ -26,5 +26,5 @@ createRoot(document.getElementById("root")).render(
         </Routes>
       </HashRouter>
     </ContextProvider>
-  </StrictMode>
+  // </StrictMode>
 );

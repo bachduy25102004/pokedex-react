@@ -1,6 +1,7 @@
 import { use, useEffect } from "react";
 import { AppContext } from "./appContext";
-import './Pokedex.css';
+import "./Pokedex.css";
+import { X } from "lucide-react";
 
 export default function Notification(props) {
   const ctx = use(AppContext);
@@ -8,27 +9,24 @@ export default function Notification(props) {
   useEffect(() => {
     const timer = setTimeout(() => {
       ctx.setPopNotification(false);
-    }, 1000);
+    }, 5000);
 
     return () => clearTimeout(timer);
   }, []);
 
-  
-
   return (
-    <div
-      className={`notification-container ${
-        ctx.popNotification ? "hide" : "show"
-      }`}
-    >
-      {props.children}
-      <button
-        onClick={() => {
-          ctx.setPopNotification(false);
-        }}
-      >
-        X
-      </button>
-    </div>
+    <>
+      {ctx.popNotification && (
+        <div className={"notification-container"}>
+          <span className="text-[1.1rem]">{props.children}</span>
+          <X
+            size={32}
+            onClick={() => {
+              ctx.setPopNotification(false);
+            }}
+          ></X>
+        </div>
+      )}
+    </>
   );
 }

@@ -16,7 +16,8 @@ export function ContextProvider({ children }) {
   // console.log('favs', favorites);
   const [deletingPokemon, setDeletingPokemon] = useState(null);
   const [popNotification, setPopNotification] = useState(false);
-
+  const [page, setPage] = useState(0);
+  const [pokemonFetched, setPokemonFetched] = useState([]);
   console.log('pop:', popNotification)
   
   const ctx = {
@@ -25,7 +26,11 @@ export function ContextProvider({ children }) {
     deletingPokemon,
     setDeletingPokemon,
     popNotification,
-    setPopNotification
+    setPopNotification,
+    page,
+    setPage,
+    pokemonFetched,
+    setPokemonFetched
   };
 
   return <AppContext value={ctx}>{children}</AppContext>;

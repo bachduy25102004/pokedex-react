@@ -384,12 +384,12 @@ body {
 
   .modal-content {
     text-align: center;
-    font-size: 2.7rem;
+    font-size: 3rem;
     width: 370px;
     height: 300px;
     background-color: rgb(238, 237, 237);
     padding: 32px;
-    padding-top: 10px;
+    padding-top: 16px;
     border-radius: 16px;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.9);
     position: relative;
@@ -449,14 +449,14 @@ body {
   }
   to {
     opacity: 0;
-    transform: translateY(-20px);
+    transform: translateY(20px);
   }
 }
 
-@keyframes dropUp {
+@keyframes popUp {
   from {
     opacity: 0;
-    transform: translateY(-20px);
+    transform: translateY(20px);
   }
   to {
     opacity: 1;
@@ -465,7 +465,7 @@ body {
 }
 
 .notification-container {
-  width: 200px;
+  /* width: 200px; */
   position: fixed;
   left: 8px;
   bottom: 8px;
@@ -475,18 +475,20 @@ body {
   border-radius: 6px;
   justify-content: space-between;
   display: flex;
-
-
+  animation: popUp 0.5s forwards, dropDown 0.5s forwards 3s;
+  gap: 16px;
   button {
     background: transparent;
     color: white;
   }
+
+  
 }
 
-.show {
-  animation: dropUp 0.3s ease forwards;
+/* .show {
+  animation: popUp 0.3s ease forwards;
 }
 
 .hide {
   animation: dropDown 0.3s ease forwards;
-}
+} */

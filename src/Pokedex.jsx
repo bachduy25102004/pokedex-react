@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { Suspense, useEffect, useRef, useState } from "react";
 import PokeCard from "./Components/PokeCard";
 import "./Pokedex.css";
 import titleImg from "./assets/title.png";
@@ -10,13 +10,26 @@ import MyButton from "./Components/MyButton";
 import { use } from "react";
 import { AppContext } from "./appContext";
 import Modal from "./Modal";
+import fetchData from "./data";
+import Pokemon from "./Pokemon";
+import Skeleton from "./Components/Skeleton";
+import SkeletonTemplate from "./Components/Skeleton";
 
 export default function Pokedex() {
-  const { favorites, setFavorites, deletingPokemon, setDeletingPokemon} = use(AppContext)
+  const {
+    favorites,
+    setFavorites,
+    deletingPokemon,
+    setDeletingPokemon,
+    page,
+    setPage,
+    pokemonFetched,
+    setPokemonFetched,
+  } = use(AppContext);
   const [pokemons, setPokemons] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   // const fetchAPI = "https://pokeapi.co/api/v2/pokemon?limit=20&offset=0"
-  const [page, setPage] = useState(0);
+  // const [page, setPage] = use(AppContext);
   const limit = 20;
   const offset = page * limit;
   const isFirstRender = useRef(true);
@@ -27,7 +40,7 @@ export default function Pokedex() {
   const timeoutRef = useRef(null);
   const [width, height] = useWindowDimension();
   const location = useLocation();
-  console.log("dimensions:", width, height);
+  // console.log("dimensions:", width, height);
 
   document.title = "Pokedex";
   const fakePokemonData = [
@@ -79,103 +92,78 @@ export default function Pokedex() {
     }
   };
 
-  useEffect(() => {
-    console.log("useeffect with no deps");
+  console.log("***Fetched pokemons: ", pokemonFetched);
 
-    setIsLoading(true);
+  // useEffect(() => {
+  //   console.log("useeffect with no deps");
 
-    fetch(`https://pokeapi.co/api/v2/pokemon?limit=${limit}&offset=${offset}`)
-      .then((response) => response.json())
-      .then(async (data) => {
-        console.log(data);
-        const { results } = data;
+  //   setIsLoading(true);
 
-        console.log(results);
+  //   const getData = async () => {
+  //     await fetch(
+  //       `https://pokeapi.co/api/v2/pokemon?limit=${limit}&offset=${offset}`
+  //     )
+  //       .then((response) => response.json())
+  //       .then(async (data) => {
+  //         console.log(data);
+  //         const { results } = data;
 
-        const pokemonList = [];
+  //         console.log(results);
 
-        for (const pkm of results) {
-          try {
-            const pokemonDetailResponse = await fetch(pkm.url);
-            const pokemonDetailData = await pokemonDetailResponse.json();
+  //         const pokemonList = [];
 
-            const pokemonObject = {
-              id: pokemonDetailData.id,
-              name: pokemonDetailData.name,
-              sprite:
-                pokemonDetailData["sprites"]["other"]["official-artwork"][
-                  "front_default"
-                ],
-              types: [],
-            };
-            pokemonList.push(pokemonObject);
-          } catch (err) {
-            console.log(err);
-          }
-        }
+  //         for (const pkm of results) {
+  //           try {
+  //             const pokemonDetailResponse = await fetch(pkm.url);
+  //             const pokemonDetailData = await pokemonDetailResponse.json();
 
-        console.log("pokemonlist: ", pokemonList);
-        setPokemons(pokemonList);
-        setIsLoading(false);
-      })
-      .catch((err) => {
-        console.log("network error");
-        setFailed(true);
-        setIsLoading(false);
-      });
-  }, []);
+  //             const pokemonObject = {
+  //               id: pokemonDetailData.id,
+  //               name: pokemonDetailData.name,
+  //               sprite:
+  //                 pokemonDetailData["sprites"]["other"]["official-artwork"][
+  //                   "front_default"
+  //                 ],
+  //               types: [],
+  //             };
+  //             pokemonList.push(pokemonObject);
+  //           } catch (err) {
+  //             console.log(err);
+  //           }
+  //         }
 
-  const fetchData = () => {
-    fetch(`https://pokeapi.co/api/v2/pokemon?limit=${limit}&offset=${offset}`)
-      .then((res) => res.json())
-      .then(async (data) => {
-        // console.log(data);
-        // setPokemon(data.results);
-        //   setIsLoading(false);
-        const pokemonList = [];
-        const { results } = data;
-        for (const pkm of results) {
-          try {
-            const response = await fetch(pkm.url);
-            const pkmData = await response.json();
-            const pokemonObject = {
-              id: pkmData.id,
-              name: pkmData.name,
-              sprite:
-                pkmData["sprites"]["other"]["official-artwork"][
-                  "front_default"
-                ],
-              types: pkmData.types.map((t) => t.type.name),
-            };
+  //         console.log("pokemonlist: ", pokemonList);
+  //         setPokemons(pokemonList);
+  //         setIsLoading(false);
+  //       })
+  //       .catch((err) => {
+  //         console.log("network error");
+  //         setFailed(true);
+  //         setIsLoading(false);
+  //       });
+  //   };
+  //   setTimeout(() => {
+  //     getData();
+  //   }, 3000);
+  // }, []);
 
-            // console.log(pkmData.types);
+  // async function getData() {
+  //   fetchData();
+  // }
 
-            pokemonList.push(pokemonObject);
-          } catch (err) {
-            console.log(err);
-          }
-        }
-        // console.log(pokemonList);
+  // s
 
-        setPokemons([...pokemons, ...pokemonList]);
-        // setIsLoading(false);
-      })
-      .catch((err) => {
-        console.log("fetch error!!!!");
-      });
-  };
-
-  useEffect(() => {
-    console.log("page", page);
-    if (isFirstRender.current) {
-      isFirstRender.current = false;
-      return;
-    }
-    fetchData();
-    // setIsLoading(true);
-    // setTimeout(() => {
-    // }, 3000);
-  }, [page]);
+  // useEffect(() => {
+  //   console.log("page", page);
+  //   if (isFirstRender.current) {
+  //     isFirstRender.current = false;
+  //     return;
+  //   }
+  //   fetchData();
+  //   // setIsLoading(true);
+  //   // setTimeout(() => {
+  //   // }, 3000);
+  // }, [page]);
 
   // useEffect(() => {
   //   if (pokemons.length === 0) setIsLoading(true);
@@ -222,20 +210,18 @@ export default function Pokedex() {
 
   return (
     <>
-      <div>
-        {/* <h1>My Pokemons</h1> */}
-        <div>
+      {/* <div> */}
+      {/* <h1>My Pokemons</h1> */}
+      {/* <div>
           {selectedPokemon.map((pkm) => (
             <div key={pkm.id}>{pkm.name}</div>
           ))}
         </div>
-      </div>
-
+      </div> */}
       {/* <h1>Pokedex</h1> */}
       <div className="title-container">
         <img src={titleImg} alt="" />
       </div>
-
       <div className="search-container">
         <div className="search-bar">
           <input
@@ -261,8 +247,50 @@ export default function Pokedex() {
           )}
         </div>
       </div>
+      <div
+        className="pokegrid"
+        style={{
+          gridTemplateColumns:
+            width <= 425 ? "repeat(2, 1fr)" : "repeat(4, 1fr)",
+        }}
+      >
+        {pokemonFetched.map((pkm) => {
+          return <PokeCard pokemon={pkm} key={pkm.name} />;
+        })}
 
-      {isLoading ? (
+        {/* <div className="grid grid-cols-4"> */}
+        {/* {Array.from({ length: 20 }).map((_, i) => (
+          <SkeletonTemplate key={i} />
+        ))} */}
+      {/* </div> */}
+
+        <Suspense
+          fallback={
+            <>
+              {Array.from({ length: 20 }).map((_, i) => (
+                <SkeletonTemplate key={i} />
+              ))}
+            </>
+          }
+        >
+          {/* <div
+            className="pokegrid"
+            style={{
+              gridTemplateColumns:
+                width <= 425 ? "repeat(2, 1fr)" : "repeat(4, 1fr)",
+            }}
+          >
+        
+            {pokemonResource.map((pkm) => (
+              <PokeCard pokemon={pkm} key={pkm.name} onClicked={onClickHandler} />
+            ))}
+        
+          </div> */}
+          <Pokemon />
+        </Suspense>
+      </div>
+      
+      {/* {isLoading ? (
         <p>is Loading...</p>
       ) : (
         <div
@@ -272,26 +300,26 @@ export default function Pokedex() {
               width <= 425 ? "repeat(2, 1fr)" : "repeat(4, 1fr)",
           }}
         >
-          {/* <div className="side-column"></div> */}
           {pokemons.map((pkm) => (
             <PokeCard pokemon={pkm} key={pkm.name} onClicked={onClickHandler} />
           ))}
-          {/* <div className="side-column"></div> */}
         </div>
-      )}
-
+      )} */}
       <MyButton className="showmore-button" onClick={() => setPage(page + 1)}>
         Show more Pokemon
       </MyButton>
       {!!deletingPokemon && (
         <Modal>
           <h1>Deleting {toTitleCase(deletingPokemon.name)} </h1>
-          <div className="abc">
-            <button className="btn-delete" onClick={removeFromFavorite}>
+          <div className="flex mb-[64px] justify-center gap-8 mt-12">
+            <button
+              className="bg-red-500 px-6 py-1 rounded-lg text-[1.7rem] hover:bg-red-700"
+              onClick={removeFromFavorite}
+            >
               Delete
             </button>
             <button
-              className="btn-cancel"
+              className="bg-gray-500 px-6 py-1 rounded-lg text-[1.7rem] hover:bg-gray-400"
               onClick={() => setDeletingPokemon(null)}
             >
               Cancel
