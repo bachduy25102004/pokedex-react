@@ -14,6 +14,7 @@ import fetchData from "./data";
 import Pokemon from "./Pokemon";
 import Skeleton from "./Components/Skeleton";
 import SkeletonTemplate from "./Components/Skeleton";
+import Notification from "./Notification";
 
 export default function Pokedex() {
   const {
@@ -21,6 +22,8 @@ export default function Pokedex() {
     setFavorites,
     deletingPokemon,
     setDeletingPokemon,
+    popNotification,
+    setPopNotification,
     page,
     setPage,
     pokemonFetched,
@@ -40,6 +43,8 @@ export default function Pokedex() {
   const timeoutRef = useRef(null);
   const [width, height] = useWindowDimension();
   const location = useLocation();
+  const [notiAlert, setNotiAlert] = useState("");
+
   // console.log("dimensions:", width, height);
 
   document.title = "Pokedex";
@@ -204,6 +209,8 @@ export default function Pokedex() {
     console.log("newfavs:", newFavs);
 
     setFavorites(newFavs);
+    setPopNotification(true);
+    setNotiAlert(`Deleted ${toTitleCase(deletingPokemon.name)} from Favorites!!!`)
     setDeletingPokemon(null);
     // setIsFav(false);
   }
@@ -255,14 +262,14 @@ export default function Pokedex() {
         }}
       >
         {pokemonFetched.map((pkm) => {
-          return <PokeCard pokemon={pkm} key={pkm.name} />;
+          return <PokeCard pokemon={pkm} key={pkm.name} noti={notiAlert} changeNoti={setNotiAlert} />;
         })}
 
         {/* <div className="grid grid-cols-4"> */}
         {/* {Array.from({ length: 20 }).map((_, i) => (
           <SkeletonTemplate key={i} />
         ))} */}
-      {/* </div> */}
+        {/* </div> */}
 
         <Suspense
           fallback={
@@ -289,7 +296,7 @@ export default function Pokedex() {
           <Pokemon />
         </Suspense>
       </div>
-      
+
       {/* {isLoading ? (
         <p>is Loading...</p>
       ) : (
@@ -327,6 +334,9 @@ export default function Pokedex() {
           </div>
         </Modal>
       )}
+      <Notification>
+        {notiAlert}
+      </Notification>
     </>
   );
 }

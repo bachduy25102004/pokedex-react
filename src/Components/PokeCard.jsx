@@ -4,18 +4,30 @@ import { Link, useLocation } from "react-router";
 import Pokedex from "../Pokedex";
 import { AppContext } from "../appContext";
 import Modal from "../Modal";
+import Notification from "../Notification";
 export function toTitleCase(name) {
   const firstChar = name[0];
   return firstChar.toUpperCase() + name.slice(1);
 }
 
+export function formatID(num) {
+    let newID = num.toString();
+    while (newID.length < 4) {
+      newID = "0" + newID;
+      // console.log(newID);
+    }
+
+    return "#" + newID;
+  };
+
 export default function PokeCard(props) {
-  const { pokemon, onClicked } = props;
+  const { pokemon, noti, changeNoti } = props;
   const [selected, setSelected] = useState(false);
   const location = useLocation();
-  const { favorites, setFavorites, deletingPokemon, setDeletingPokemon } = use(AppContext);
+  const { favorites, setFavorites, deletingPokemon, setDeletingPokemon, popNotification, setPopNotification } = use(AppContext);
   const [isFav, setIsFav] = useState(false);
   // console.log(location.pathname);
+  // const [notiAlert, setNotiAlert] = useState("");
 
   const onPokemonSelect = () => {
     setSelected(!selected);
@@ -25,15 +37,7 @@ export default function PokeCard(props) {
   //   onClicked(pokemon, selected)
   // }, [selected]);
 
-  const formatID = (num) => {
-    let newID = num.toString();
-    while (newID.length < 4) {
-      newID = "0" + newID;
-      // console.log(newID);
-    }
-
-    return "#" + newID;
-  };
+  
 
   useEffect(() => {
     if (!pokemon) return;
@@ -55,6 +59,9 @@ export default function PokeCard(props) {
 
       setFavorites([...favorites, pokemon]);
       setIsFav(true);
+      setPopNotification(true);
+      changeNoti(`Added ${toTitleCase(pokemon.name)} to Favorites!!!`)
+      
     } else {
       console.log(`${pokemon.name} is already in favorites!`);
     }
@@ -112,6 +119,10 @@ export default function PokeCard(props) {
         </div>
         {/* </div> */}
       </Link>
+
+      {/* <Notification>
+        {notiAlert}
+      </Notification> */}
       {/* {!!deletingPokemon && (
         <Modal>
           <h1>Deleting {toTitleCase(deletingPokemon.name)} </h1>

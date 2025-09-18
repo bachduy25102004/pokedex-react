@@ -2,6 +2,7 @@ import { use, useEffect } from "react";
 import { AppContext } from "./appContext";
 import "./Pokedex.css";
 import { X } from "lucide-react";
+import { createPortal } from "react-dom";
 
 export default function Notification(props) {
   const ctx = use(AppContext);
@@ -12,9 +13,13 @@ export default function Notification(props) {
     }, 5000);
 
     return () => clearTimeout(timer);
-  }, []);
+  }, [ctx.popNotification]);
 
-  return (
+  useEffect(() => {
+    console.log('Notification alert: ', ctx.popNotification);
+  }, [ctx.popNotification]);
+
+  return createPortal(
     <>
       {ctx.popNotification && (
         <div className={"notification-container"}>
@@ -27,6 +32,7 @@ export default function Notification(props) {
           ></X>
         </div>
       )}
-    </>
+    </>,
+    document.querySelector("#notification-container")
   );
 }

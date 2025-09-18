@@ -4,7 +4,7 @@ import PokeCard, { toTitleCase } from "./Components/PokeCard";
 import Modal from "./Modal";
 
 export default function PokemonFav() {
-  const { favorites, setFavorites, deletingPokemon, setDeletingPokemon } =
+  const { favorites, setFavorites, deletingPokemon, setDeletingPokemon, popNotification, setPopNotification } =
     use(AppContext);
   document.title = "Favorite";
   function removeFromFavorite() {
